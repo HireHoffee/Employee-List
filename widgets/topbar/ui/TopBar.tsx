@@ -1,3 +1,4 @@
+import DepartmentsList from "@/shared/ui/DepartmentsList";
 import SearchInput from "@/shared/ui/SearchInput";
 import { StyleSheet, View } from "react-native";
 
@@ -5,6 +6,7 @@ const TopBar = () => {
   return (
     <View style={styles.container}>
       <SearchInput />
+      <DepartmentsList />
     </View>
   );
 };
