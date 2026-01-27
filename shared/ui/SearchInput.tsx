@@ -6,13 +6,13 @@ import { StyleSheet, TextInput, View } from "react-native";
 const SearchInput = () => {
   return (
     <View style={styles.inputContainer}>
-      <SearchIcon style={styles.search} />
+      <SearchIcon width={24} height={24} style={styles.search} />
       <TextInput
         style={styles.input}
         placeholder="Введи имя, тег, почту..."
         placeholderTextColor={"#c3c3c6"}
       />
-      <SortIcon style={styles.sort} />
+      <SortIcon width={24} height={24} style={styles.sort} />
     </View>
   );
 };
@@ -37,10 +37,12 @@ const styles = StyleSheet.create({
   search: {
     position: "absolute",
     left: 12,
+    zIndex: 1,
   },
   sort: {
     position: "absolute",
     right: 12,
+    zIndex: 1,
   },
 });
 
