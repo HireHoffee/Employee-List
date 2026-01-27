@@ -1,12 +1,10 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import TopBar from "@/widgets/topbar/ui/TopBar";
+import { View } from "react-native";
 
 const HomePage = () => {
   return (
     <View>
-      <Text>Home Page</Text>
-      <Text>{"\n"}</Text>
-      <Link href={"/employee/123"}>Перейти к сотрудникам</Link>
+      <TopBar />
     </View>
   );
 };

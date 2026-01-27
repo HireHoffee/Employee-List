@@ -1,12 +1,19 @@
-import React from "react";
-import { Text, View } from "react-native";
+import SearchInput from "@/shared/ui/SearchInput";
+import { StyleSheet, View } from "react-native";
 
 const TopBar = () => {
   return (
-    <View>
-      <Text>TopBar</Text>
+    <View style={styles.container}>
+      <SearchInput />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    minHeight: 100,
+    justifyContent: "center",
+  },
+});
 
 export default TopBar;
