@@ -1,10 +1,11 @@
 import EmployeeCard from "@/shared/ui/EmployeeCard";
+import SortDrawer from "@/shared/ui/SortDrawer";
 import TopBar from "@/widgets/topbar/ui/TopBar";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
       <FlatList
         data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
@@ -13,6 +14,7 @@ const HomePage = () => {
         contentContainerStyle={styles.cardsContainer}
         showsVerticalScrollIndicator={false}
       />
+      <SortDrawer />
     </View>
   );
 };
