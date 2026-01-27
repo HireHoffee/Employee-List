@@ -1,12 +1,29 @@
+import EmployeeCard from "@/shared/ui/EmployeeCard";
 import TopBar from "@/widgets/topbar/ui/TopBar";
-import { View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <TopBar />
+      <FlatList
+        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+        renderItem={() => <EmployeeCard />}
+        keyExtractor={(item) => item.toString()}
+        contentContainerStyle={styles.cardsContainer}
+        showsVerticalScrollIndicator={false}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  cardsContainer: {
+    marginTop: 16,
+    paddingBottom: 32,
+    marginHorizontal: 16,
+    gap: 4,
+  },
+});
 
 export default HomePage;
