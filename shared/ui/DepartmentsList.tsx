@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 const departments = [
-  { id: 0, name: "Все", apiTag: "" },
+  { id: 0, name: "Все", apiTag: "all" },
   { id: 1, name: "Android", apiTag: "android" },
   { id: 2, name: "iOS", apiTag: "ios" },
   { id: 3, name: "Дизайн", apiTag: "design" },
