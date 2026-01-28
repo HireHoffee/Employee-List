@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   container: {
     minHeight: 100,
     justifyContent: "center",
+    paddingTop: 10,
   },
 });
 

@@ -1,12 +1,26 @@
+import { $employee, setEmployeeSelectedId } from "@/entities/employees/store";
 import LeftArrowIcon from "@/shared/assets/svgs/left-arrow-icon.svg";
 import PhoneIcon from "@/shared/assets/svgs/phone-icon.svg";
 import StarIcon from "@/shared/assets/svgs/star-icon.svg";
+import { calculateAge, formatPhoneNumber } from "@/shared/utils/utilsFunctions";
+import { useUnit } from "effector-react";
 import { Image } from "expo-image";
-import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useGlobalSearchParams, useRouter } from "expo-router";
+import { useEffect } from "react";
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 
 const EmployeePage = () => {
   const router = useRouter();
+  const glob = useGlobalSearchParams();
+  const [data, setEmployeesId] = useUnit([$employee, setEmployeeSelectedId]);
+
+  useEffect(() => {
+    setEmployeesId(glob.id as string);
+  }, []);
+
+  if (!data) {
+    return;
+  }
 
   return (
     <View>
@@ -14,27 +28,40 @@ const EmployeePage = () => {
         <Pressable style={styles.icon} onPress={() => router.push("/")}>
           {({ pressed }) => <LeftArrowIcon style={[pressed && { opacity: 0.6 }]} />}
         </Pressable>
+        {/* <Image style={styles.image} source={data.avatarUrl} /> (не прогружаются аватары с бэка) */}
         <Image style={styles.image} source="https://picsum.photos/seed/696/3000/2000" />
         <View style={{ gap: 12 }}>
           <View style={styles.info}>
-            <Text style={{ fontWeight: "600", fontSize: 24 }}>Алексей Миногаров</Text>
-            <Text style={{ color: "#97979b" }}>mi</Text>
+            <Text
+              style={{ fontWeight: "600", fontSize: 24 }}
+            >{`${data.firstName} ${data.lastName}`}</Text>
+            <Text style={{ color: "#97979b" }}>{data.userTag}</Text>
           </View>
-          <Text style={{ textAlign: "center", fontSize: 13 }}>Analyst</Text>
+          <Text style={{ textAlign: "center", fontSize: 13 }}>{data.department}</Text>
         </View>
       </View>
       <View style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
         <View style={styles.birthdayContainer}>
           <View style={styles.birthday}>
             <StarIcon />
-            <Text style={{ fontSize: 16 }}>5 июня 1996</Text>
+            <Text style={{ fontSize: 16 }}>
+              {new Date(data.birthday).toLocaleDateString("ru-RU", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </Text>
           </View>
-          <Text style={{ color: "#97979B", fontSize: 16 }}>24 года</Text>
+          <Text style={{ color: "#97979B", fontSize: 16 }}>{calculateAge(data.birthday)}</Text>
         </View>
-        <View style={styles.phoneContainer}>
-          <PhoneIcon />
-          <Text style={{ fontSize: 16 }}>+7 (999) 900 90 90</Text>
-        </View>
+        <Pressable onPress={() => Linking.openURL(`tel:${data.phone}`)}>
+          {({ pressed }) => (
+            <View style={[styles.phoneContainer, pressed && { opacity: 0.6 }]}>
+              <PhoneIcon />
+              <Text style={{ fontSize: 16 }}>{formatPhoneNumber(data.phone)}</Text>
+            </View>
+          )}
+        </Pressable>
       </View>
     </View>
   );

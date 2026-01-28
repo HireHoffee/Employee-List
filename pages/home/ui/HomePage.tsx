@@ -1,24 +1,25 @@
 import { getEmployees } from "@/entities/employees/api";
-import { Employee } from "@/entities/employees/types";
+import { $employees, setEmployees } from "@/entities/employees/store";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
 import SortDrawer from "@/shared/ui/SortDrawer";
 import TopBar from "@/widgets/topbar/ui/TopBar";
-import { useEffect, useState } from "react";
+import { useUnit } from "effector-react";
+import { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [employees, setEmployeesData] = useUnit([$employees, setEmployees]);
 
   useEffect(() => {
     getEmployees().then((response) => {
-      setEmployees(response.data.items);
+      setEmployeesData(response.data.items);
     });
   }, []);
 
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
-      {employees.length > 0 ? (
+      {employees && employees.length > 0 ? (
         <FlatList
           data={employees}
           renderItem={(item) => <EmployeeCard {...item.item} />}

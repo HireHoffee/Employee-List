@@ -3,11 +3,9 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-type Props = Pick<Employee, "firstName" | "lastName" | "avatarUrl" | "userTag" | "department">;
-
-const EmployeeCard = ({ firstName, lastName, avatarUrl, userTag, department }: Props) => {
+const EmployeeCard = ({ id, firstName, lastName, avatarUrl, userTag, department }: Employee) => {
   return (
-    <Link href={"/employee/12345"} asChild>
+    <Link href={`/employee/${id}`} asChild>
       <Pressable>
         {({ pressed }) => (
           <View style={[styles.container, pressed && { opacity: 0.6 }]}>
