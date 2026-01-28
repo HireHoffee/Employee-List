@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: "#f7f7f8",
     width: "100%",
-    fontSize: 16,
+    fontSize: 15,
   },
   search: {
     position: "absolute",

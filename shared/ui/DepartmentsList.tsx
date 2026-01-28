@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#97979b",
+    fontSize: 15,
   },
 });
 
