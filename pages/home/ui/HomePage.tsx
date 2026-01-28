@@ -1,7 +1,8 @@
 import { $selectedDepartment } from "@/entities/departments/store";
 import { getEmployees } from "@/entities/employees/api";
-import { $employees, setEmployees } from "@/entities/employees/store";
+import { $foundEmployees, $searchedText, setEmployees } from "@/entities/employees/store";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
+import NoResults from "@/shared/ui/NoResults";
 import SortDrawer from "@/shared/ui/SortDrawer";
 import TopBar from "@/widgets/topbar/ui/TopBar";
 import { useUnit } from "effector-react";
@@ -9,29 +10,38 @@ import { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
-  const [employees, setEmployeesData, selectedDepartment] = useUnit([
-    $employees,
+  const [foundEmployees, setEmployeesData, selectedDepartment, searchedText] = useUnit([
+    $foundEmployees,
     setEmployees,
     $selectedDepartment,
+    $searchedText,
   ]);
 
   useEffect(() => {
-    getEmployees(selectedDepartment).then((response) => {
-      setEmployeesData(response.data.items);
-    });
+    try {
+      // throw new Error("");
+      getEmployees(selectedDepartment).then((response) => {
+        setEmployeesData(response.data.items);
+      });
+    } catch (error) {
+      // console.error(error);
+      // throw error;
+    }
   }, [selectedDepartment]);
 
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
-      {employees && employees.length > 0 ? (
+      {foundEmployees.length > 0 ? (
         <FlatList
-          data={employees}
+          data={foundEmployees}
           renderItem={(item) => <EmployeeCard {...item.item} />}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.cardsContainer}
           showsVerticalScrollIndicator={false}
         />
+      ) : searchedText ? (
+        <NoResults />
       ) : null}
       <SortDrawer />
     </View>

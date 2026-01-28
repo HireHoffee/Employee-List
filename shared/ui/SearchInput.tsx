@@ -3,7 +3,7 @@ import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-const SearchInput = () => {
+const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void }) => {
   return (
     <View style={styles.inputContainer}>
       <SearchIcon width={24} height={24} style={styles.search} />
@@ -11,6 +11,7 @@ const SearchInput = () => {
         style={styles.input}
         placeholder="Введи имя, тег, почту..."
         placeholderTextColor={"#c3c3c6"}
+        onChangeText={onChangeText}
       />
       <SortIcon width={24} height={24} style={styles.sort} />
     </View>
