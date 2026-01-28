@@ -12,7 +12,7 @@ const EmployeeCard = ({ id, firstName, lastName, avatarUrl, userTag, department 
             <Image style={styles.image} source={"https://picsum.photos/seed/696/3000/2000"} />
             {/* <Image style={styles.image} source={avatarUrl} /> (не прогружаются аватары с бэка) */}
             <View>
-              <View style={{ flexDirection: "row", gap: 4 }}>
+              <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                 <Text
                   style={{ fontWeight: "600", fontSize: 16 }}
                 >{`${firstName} ${lastName}`}</Text>

@@ -21,7 +21,15 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
           onPress={() => setDepartment(department.apiTag)}
         >
           {({ pressed }) => (
-            <Text style={[styles.text, pressed && { opacity: 0.6 }]}>{department.name}</Text>
+            <Text
+              style={[
+                styles.text,
+                selectedTag === department.apiTag && styles.selectedItem,
+                pressed && { opacity: 0.6 },
+              ]}
+            >
+              {department.name}
+            </Text>
           )}
         </Pressable>
       ))}
@@ -48,6 +56,10 @@ const styles = StyleSheet.create({
   bottomBorder: {
     borderBottomWidth: 2,
     borderBottomColor: "#6534ff",
+  },
+  selectedItem: {
+    fontWeight: 600,
+    color: "#000",
   },
 });
 
