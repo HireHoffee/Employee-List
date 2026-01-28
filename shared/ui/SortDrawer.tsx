@@ -1,36 +1,88 @@
 import SelectedIcon from "@/shared/assets/svgs/selected-icon.svg";
 import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
-import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { setIsDrawerOpen } from "@/shared/store/utils";
+import { useUnit } from "effector-react";
+import React, { useEffect, useRef } from "react";
+import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
 
 const SortDrawer = () => {
+  const setDrawerOpen = useUnit(setIsDrawerOpen);
+  const slideAnim = useRef(new Animated.Value(300)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
+  const handleClose = () => {
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 300,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 250,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      setDrawerOpen(false);
+    });
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.drawer}>
-        <View style={styles.draggableLine}></View>
+      <Pressable style={StyleSheet.absoluteFill} onPress={handleClose}>
+        <Animated.View
+          style={[
+            StyleSheet.absoluteFill,
+            { backgroundColor: "rgba(0,0,0,0.2)", opacity: fadeAnim },
+          ]}
+        />
+      </Pressable>
+      <Animated.View style={[styles.drawer, { transform: [{ translateY: slideAnim }] }]}>
+        <View style={styles.draggableLine} />
         <Text style={styles.title}>Сортировка</Text>
         <View style={styles.options}>
           <Pressable style={styles.option}>
-            <SelectedIcon />
-            <Text style={{ fontSize: 16 }}>По алфавиту</Text>
+            {({ pressed }) => (
+              <>
+                <SelectedIcon style={[pressed && { opacity: 0.6 }]} />
+                <Text style={[pressed && { opacity: 0.6 }]}>По алфавиту</Text>
+              </>
+            )}
           </Pressable>
           <Pressable style={styles.option}>
-            <UnselectedIcon />
-            <Text style={{ fontSize: 16 }}>По дню рождения</Text>
+            {({ pressed }) => (
+              <>
+                <UnselectedIcon style={[pressed && { opacity: 0.6 }]} />
+                <Text style={[pressed && { opacity: 0.6 }]}>По дню рождения</Text>
+              </>
+            )}
           </Pressable>
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: "none", // временно
     position: "absolute",
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
     paddingHorizontal: 8,
     justifyContent: "flex-end",
   },
@@ -50,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: "600",
     textAlign: "center",
     fontSize: 24,
   },

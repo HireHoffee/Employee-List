@@ -2,6 +2,7 @@ import { $selectedDepartment } from "@/entities/departments/store";
 import { getEmployees } from "@/entities/employees/api";
 import { $foundEmployees, $searchedText, setEmployees } from "@/entities/employees/store";
 import { setError } from "@/shared/store/errors";
+import { $isDrawerOpen } from "@/shared/store/utils";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
 import NoResults from "@/shared/ui/NoResults";
 import SortDrawer from "@/shared/ui/SortDrawer";
@@ -18,6 +19,7 @@ const HomePage = () => {
     $searchedText,
   ]);
   const setNewError = useUnit(setError);
+  const isDrawerOpen = useUnit($isDrawerOpen);
 
   useEffect(() => {
     getEmployees(selectedDepartment)
@@ -44,7 +46,7 @@ const HomePage = () => {
       ) : searchedText ? (
         <NoResults />
       ) : null}
-      <SortDrawer />
+      {isDrawerOpen && <SortDrawer />}
     </View>
   );
 };

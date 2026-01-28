@@ -1,9 +1,13 @@
 import SearchIcon from "@/shared/assets/svgs/search-icon.svg";
 import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
+import { useUnit } from "effector-react";
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { setIsDrawerOpen } from "../store/utils";
 
 const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void }) => {
+  const setDrawerOpen = useUnit(setIsDrawerOpen);
+
   return (
     <View style={styles.inputContainer}>
       <SearchIcon width={24} height={24} style={styles.search} />
@@ -13,7 +17,9 @@ const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void })
         placeholderTextColor={"#c3c3c6"}
         onChangeText={onChangeText}
       />
-      <SortIcon width={24} height={24} style={styles.sort} />
+      <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
+        {({ pressed }) => <SortIcon width={24} height={24} style={[pressed && { opacity: 0.6 }]} />}
+      </Pressable>
     </View>
   );
 };
