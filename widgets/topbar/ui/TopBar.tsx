@@ -1,12 +1,19 @@
+import { $selectedDepartment, setSelectedDepartment } from "@/entities/departments/store";
 import DepartmentsList from "@/shared/ui/DepartmentsList";
 import SearchInput from "@/shared/ui/SearchInput";
+import { useUnit } from "effector-react";
 import { StyleSheet, View } from "react-native";
 
 const TopBar = () => {
+  const [selectedDepartment, setDepartmentTag] = useUnit([
+    $selectedDepartment,
+    setSelectedDepartment,
+  ]);
+
   return (
     <View style={styles.container}>
       <SearchInput />
-      <DepartmentsList />
+      <DepartmentsList setDepartment={setDepartmentTag} selectedTag={selectedDepartment} />
     </View>
   );
 };

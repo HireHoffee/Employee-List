@@ -1,3 +1,4 @@
+import { $selectedDepartment } from "@/entities/departments/store";
 import { getEmployees } from "@/entities/employees/api";
 import { $employees, setEmployees } from "@/entities/employees/store";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
@@ -8,13 +9,17 @@ import { useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
-  const [employees, setEmployeesData] = useUnit([$employees, setEmployees]);
+  const [employees, setEmployeesData, selectedDepartment] = useUnit([
+    $employees,
+    setEmployees,
+    $selectedDepartment,
+  ]);
 
   useEffect(() => {
-    getEmployees().then((response) => {
+    getEmployees(selectedDepartment).then((response) => {
       setEmployeesData(response.data.items);
     });
-  }, []);
+  }, [selectedDepartment]);
 
   return (
     <View style={{ flex: 1, position: "relative" }}>

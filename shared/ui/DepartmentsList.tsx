@@ -1,22 +1,12 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
+import { DEPARTMENTS_LIST } from "../data";
 
-const departments = [
-  { id: 0, name: "Все", apiTag: "all" },
-  { id: 1, name: "Android", apiTag: "android" },
-  { id: 2, name: "iOS", apiTag: "ios" },
-  { id: 3, name: "Дизайн", apiTag: "design" },
-  { id: 4, name: "Менеджмент", apiTag: "management" },
-  { id: 5, name: "QA", apiTag: "qa" },
-  { id: 6, name: "Бэк-офис", apiTag: "back_office" },
-  { id: 7, name: "Frontend", apiTag: "frontend" },
-  { id: 8, name: "HR", apiTag: "hr" },
-  { id: 9, name: "PR", apiTag: "pr" },
-  { id: 10, name: "Backend", apiTag: "backend" },
-  { id: 11, name: "Техподдержка", apiTag: "support" },
-  { id: 12, name: "Аналитика", apiTag: "analytics" },
-];
+type Props = {
+  selectedTag: string;
+  setDepartment: (tag: string) => void;
+};
 
-const DepartmentsList = () => {
+const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
   return (
     <ScrollView
       horizontal
@@ -24,10 +14,16 @@ const DepartmentsList = () => {
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
     >
-      {departments.map((department) => (
-        <View key={department.id} style={styles.department}>
-          <Text style={styles.text}>{department.name}</Text>
-        </View>
+      {DEPARTMENTS_LIST.map((department) => (
+        <Pressable
+          key={department.id}
+          style={[styles.department, selectedTag === department.apiTag && styles.bottomBorder]}
+          onPress={() => setDepartment(department.apiTag)}
+        >
+          {({ pressed }) => (
+            <Text style={[styles.text, pressed && { opacity: 0.6 }]}>{department.name}</Text>
+          )}
+        </Pressable>
       ))}
     </ScrollView>
   );
@@ -48,6 +44,10 @@ const styles = StyleSheet.create({
   text: {
     color: "#97979b",
     fontSize: 15,
+  },
+  bottomBorder: {
+    borderBottomWidth: 2,
+    borderBottomColor: "#6534ff",
   },
 });
 
