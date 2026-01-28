@@ -25,7 +25,7 @@ const EmployeePage = () => {
   return (
     <View>
       <View style={styles.mainInfoContainer}>
-        <Pressable style={styles.icon} onPress={() => router.push("/")}>
+        <Pressable style={styles.icon} onPress={() => router.back()}>
           {({ pressed }) => <LeftArrowIcon style={[pressed && { opacity: 0.6 }]} />}
         </Pressable>
         {/* <Image style={styles.image} source={data.avatarUrl} /> (не прогружаются аватары с бэка) */}
