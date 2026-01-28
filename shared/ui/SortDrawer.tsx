@@ -8,7 +8,7 @@ const SortDrawer = () => {
     <View style={styles.container}>
       <View style={styles.drawer}>
         <View style={styles.draggableLine}></View>
-        <Text style={{ fontWeight: "bold", textAlign: "center", fontSize: 24 }}>Сортировка</Text>
+        <Text style={styles.title}>Сортировка</Text>
         <View style={styles.options}>
           <Pressable style={styles.option}>
             <SelectedIcon />
@@ -48,6 +48,11 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 16,
+  },
+  title: {
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 24,
   },
   options: {
     marginHorizontal: 16,
