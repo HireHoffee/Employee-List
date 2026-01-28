@@ -3,12 +3,13 @@ import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
 import { setIsDrawerOpen } from "@/shared/store/utils";
 import { useUnit } from "effector-react";
 import React, { useEffect, useRef } from "react";
-import { Animated, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
 
 const SortDrawer = () => {
   const setDrawerOpen = useUnit(setIsDrawerOpen);
   const slideAnim = useRef(new Animated.Value(300)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const panY = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
@@ -42,6 +43,35 @@ const SortDrawer = () => {
     });
   };
 
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, gestureState) => {
+        return Math.abs(gestureState.dy) > 5;
+      },
+      onPanResponderGrant: () => {
+        panY.setValue(0);
+      },
+      onPanResponderMove: (_, gestureState) => {
+        if (gestureState.dy > 0) {
+          panY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 100 || gestureState.vy > 0.5) {
+          handleClose();
+        } else {
+          Animated.spring(panY, {
+            toValue: 0,
+            tension: 100,
+            friction: 10,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+    }),
+  ).current;
+
   return (
     <View style={styles.container}>
       <Pressable style={StyleSheet.absoluteFill} onPress={handleClose}>
@@ -52,7 +82,15 @@ const SortDrawer = () => {
           ]}
         />
       </Pressable>
-      <Animated.View style={[styles.drawer, { transform: [{ translateY: slideAnim }] }]}>
+      <Animated.View
+        style={[
+          styles.drawer,
+          {
+            transform: [{ translateY: Animated.add(slideAnim, panY) }],
+          },
+        ]}
+        {...panResponder.panHandlers}
+      >
         <View style={styles.draggableLine} />
         <Text style={styles.title}>Сортировка</Text>
         <View style={styles.options}>
