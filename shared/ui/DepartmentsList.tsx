@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { DEPARTMENTS_LIST } from "../data";
 
 type Props = {
@@ -8,41 +8,50 @@ type Props = {
 
 const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      {DEPARTMENTS_LIST.map((department) => (
-        <Pressable
-          key={department.id}
-          style={[styles.department, selectedTag === department.apiTag && styles.bottomBorder]}
-          onPress={() => setDepartment(department.apiTag)}
-        >
-          {({ pressed }) => (
-            <Text
-              style={[
-                styles.text,
-                selectedTag === department.apiTag && styles.selectedItem,
-                pressed && { opacity: 0.6 },
-              ]}
-            >
-              {department.name}
-            </Text>
-          )}
-        </Pressable>
-      ))}
-    </ScrollView>
+    <>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.container}
+      >
+        {DEPARTMENTS_LIST.map((department) => (
+          <Pressable
+            key={department.id}
+            style={[styles.department, selectedTag === department.apiTag && styles.bottomBorder]}
+            onPress={() => setDepartment(department.apiTag)}
+          >
+            {({ pressed }) => (
+              <Text
+                style={[
+                  styles.text,
+                  selectedTag === department.apiTag && styles.selectedItem,
+                  pressed && { opacity: 0.6 },
+                ]}
+              >
+                {department.name}
+              </Text>
+            )}
+          </Pressable>
+        ))}
+      </ScrollView>
+      <View
+        style={{
+          height: 0.5,
+          backgroundColor: "#c3c3c6",
+          width: "100%",
+          position: "absolute",
+          bottom: 0,
+          zIndex: -1,
+        }}
+      ></View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    paddingLeft: 16,
+    paddingHorizontal: 16,
     paddingTop: 8,
-  },
-  contentContainer: {
     flexDirection: "row",
   },
   department: {
