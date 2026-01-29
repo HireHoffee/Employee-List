@@ -1,5 +1,6 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { DEPARTMENTS_LIST } from "../data";
+import { i18n } from "../utils/localization";
 
 type Props = {
   selectedTag: string;
@@ -28,7 +29,7 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
                   pressed && { opacity: 0.6 },
                 ]}
               >
-                {department.name}
+                {i18n.t(`departments.${department.apiTag}`)}
               </Text>
             )}
           </Pressable>

@@ -5,6 +5,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { $sortValue } from "../store/utils";
+import { i18n } from "../utils/localization";
 
 const EmployeeCard = ({
   id,
@@ -45,10 +46,13 @@ const EmployeeCard = ({
             </View>
             {sortValue === "birthday" ? (
               <Text style={{ fontSize: 15 }}>
-                {new Date(birthday).toLocaleDateString("ru-RU", {
-                  month: "short",
-                  day: "numeric",
-                })}
+                {new Date(birthday).toLocaleDateString(
+                  `${i18n.locale === "ru" ? "ru-RU" : "en-US"}`,
+                  {
+                    month: "short",
+                    day: "numeric",
+                  },
+                )}
               </Text>
             ) : null}
           </View>

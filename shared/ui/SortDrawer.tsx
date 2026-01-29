@@ -4,6 +4,7 @@ import { $sortValue, setIsDrawerOpen, setSortValue } from "@/shared/store/utils"
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
+import { i18n } from "../utils/localization";
 
 const SortDrawer = () => {
   const [sortValue, setSortingValue, setDrawerOpen] = useUnit([
@@ -97,7 +98,7 @@ const SortDrawer = () => {
         {...panResponder.panHandlers}
       >
         <View style={styles.draggableLine} />
-        <Text style={styles.title}>Сортировка</Text>
+        <Text style={styles.title}>{i18n.t("sort")}</Text>
         <View style={styles.options}>
           <Pressable
             style={styles.option}
@@ -109,7 +110,7 @@ const SortDrawer = () => {
             {({ pressed }) => (
               <>
                 {sortValue === "alphabet" ? <SelectedIcon /> : <UnselectedIcon />}
-                <Text style={[pressed && { opacity: 0.6 }]}>По алфавиту</Text>
+                <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByAlphabet")}</Text>
               </>
             )}
           </Pressable>
@@ -123,7 +124,7 @@ const SortDrawer = () => {
             {({ pressed }) => (
               <>
                 {sortValue === "birthday" ? <SelectedIcon /> : <UnselectedIcon />}
-                <Text style={[pressed && { opacity: 0.6 }]}>По дню рождения</Text>
+                <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByBirthday")}</Text>
               </>
             )}
           </Pressable>

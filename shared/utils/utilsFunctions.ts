@@ -10,7 +10,7 @@ export function formatPhoneNumber(phone: string) {
   return formatted;
 }
 
-export function calculateAge(birthDate: string): string | undefined {
+export function calculateAge(birthDate: string, locale: string): string | undefined {
   if (!birthDate) return;
 
   const today = new Date();
@@ -27,6 +27,7 @@ export function calculateAge(birthDate: string): string | undefined {
   const lastDigit = age % 10;
   const lastTwoDigits = age % 100;
   let yearWord = "лет";
+  let enYearsWord = "years old";
 
   if (lastTwoDigits >= 11 && lastTwoDigits <= 14) {
     yearWord = "лет";
@@ -36,5 +37,5 @@ export function calculateAge(birthDate: string): string | undefined {
     yearWord = "года";
   }
 
-  return `${age} ${yearWord}`;
+  return `${age} ${locale === "ru" ? yearWord : enYearsWord}`;
 }

@@ -2,6 +2,7 @@ import { $employee, setEmployeeSelectedId } from "@/entities/employees/store";
 import LeftArrowIcon from "@/shared/assets/svgs/left-arrow-icon.svg";
 import PhoneIcon from "@/shared/assets/svgs/phone-icon.svg";
 import StarIcon from "@/shared/assets/svgs/star-icon.svg";
+import { i18n } from "@/shared/utils/localization";
 import { calculateAge, formatPhoneNumber } from "@/shared/utils/utilsFunctions";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
@@ -53,14 +54,19 @@ const EmployeePage = () => {
           <View style={styles.birthday}>
             <StarIcon />
             <Text style={{ fontSize: 16 }}>
-              {new Date(data.birthday).toLocaleDateString("ru-RU", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
+              {new Date(data.birthday).toLocaleDateString(
+                `${i18n.locale === "ru" ? "ru-RU" : "en-US"}`,
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                },
+              )}
             </Text>
           </View>
-          <Text style={{ color: "#97979B", fontSize: 16 }}>{calculateAge(data.birthday)}</Text>
+          <Text style={{ color: "#97979B", fontSize: 16 }}>
+            {calculateAge(data.birthday, i18n.locale)}
+          </Text>
         </View>
         <Pressable onPress={() => Linking.openURL(`tel:${data.phone}`)}>
           {({ pressed }) => (

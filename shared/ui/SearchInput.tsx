@@ -4,6 +4,7 @@ import { useUnit } from "effector-react";
 import { useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
+import { i18n } from "../utils/localization";
 
 const SearchInput = ({
   onChangeText,
@@ -23,7 +24,7 @@ const SearchInput = ({
       <TextInput
         ref={inputRef}
         style={styles.input}
-        placeholder="Введи имя, тег, почту..."
+        placeholder={i18n.t("searchPlaceholder")}
         placeholderTextColor={"#c3c3c6"}
         onChangeText={(text) => {
           onChangeText(text);
@@ -55,7 +56,7 @@ const SearchInput = ({
           }}
         >
           {({ pressed }) => (
-            <Text style={[styles.cancel, pressed && { opacity: 0.6 }]}>Отмена</Text>
+            <Text style={[styles.cancel, pressed && { opacity: 0.6 }]}>{i18n.t("cancel")}</Text>
           )}
         </Pressable>
       )}
