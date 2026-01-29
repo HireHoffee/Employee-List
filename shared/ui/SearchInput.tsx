@@ -1,8 +1,8 @@
 import SearchIcon from "@/shared/assets/svgs/search-icon.svg";
 import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import { useUnit } from "effector-react";
-import { useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { useRef, useState } from "react";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
 
 const SearchInput = ({
@@ -14,11 +14,14 @@ const SearchInput = ({
 }) => {
   const [sortValue, setDrawerOpen] = useUnit([$sortValue, setIsDrawerOpen]);
   const [searchValue, setSearchValue] = useState(value);
+  const [searchOnFocus, setSearchOnFocus] = useState(false);
+  const inputRef = useRef<TextInput>(null);
 
   return (
     <View style={styles.inputContainer}>
       <SearchIcon width={24} height={24} style={styles.search} />
       <TextInput
+        ref={inputRef}
         style={styles.input}
         placeholder="Введи имя, тег, почту..."
         placeholderTextColor={"#c3c3c6"}
@@ -27,17 +30,35 @@ const SearchInput = ({
           setSearchValue(text);
         }}
         value={searchValue}
+        onFocus={() => setSearchOnFocus(true)}
+        onBlur={() => setSearchOnFocus(false)}
       />
-      <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
-        {({ pressed }) => (
-          <SortIcon
-            width={24}
-            height={24}
-            style={[pressed && { opacity: 0.6 }]}
-            fill={sortValue ? "#6534ff" : "#9e9ea2"}
-          />
-        )}
-      </Pressable>
+      {!searchOnFocus && (
+        <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
+          {({ pressed }) => (
+            <SortIcon
+              width={24}
+              height={24}
+              style={[pressed && { opacity: 0.6 }]}
+              fill={sortValue ? "#6534ff" : "#9e9ea2"}
+            />
+          )}
+        </Pressable>
+      )}
+      {searchOnFocus && (
+        <Pressable
+          onPress={() => {
+            inputRef.current?.blur();
+            setSearchOnFocus(false);
+            setSearchValue("");
+            onChangeText("");
+          }}
+        >
+          {({ pressed }) => (
+            <Text style={[styles.cancel, pressed && { opacity: 0.6 }]}>Отмена</Text>
+          )}
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -49,6 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 6,
     paddingHorizontal: 16,
+    gap: 12,
   },
   input: {
     paddingHorizontal: 44,
@@ -56,7 +78,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 16,
     backgroundColor: "#f7f7f8",
-    width: "100%",
+    flex: 1,
     fontSize: 15,
   },
   search: {
@@ -68,6 +90,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 28,
     zIndex: 1,
+  },
+  cancel: {
+    color: "#6534FF",
+    fontSize: 14,
+    fontWeight: 600,
   },
 });
 
