@@ -11,7 +11,7 @@ import TopBar from "@/widgets/topbar/ui/TopBar";
 import { useQuery } from "@tanstack/react-query";
 import { useUnit } from "effector-react";
 import { useEffect } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
 
 const HomePage = () => {
   const [sortedEmployees, setEmployeesData, selectedDepartment, searchedText] = useUnit([
@@ -23,7 +23,7 @@ const HomePage = () => {
   const setNewError = useUnit(setError);
   const isDrawerOpen = useUnit($isDrawerOpen);
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError, error, refetch, isRefetching } = useQuery({
     queryKey: ["employees", selectedDepartment],
     queryFn: () => getEmployees(selectedDepartment),
     select: (response) => response.data.items,
@@ -63,6 +63,14 @@ const HomePage = () => {
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.cardsContainer}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefetching}
+              onRefresh={refetch}
+              colors={["#6534FF"]}
+              tintColor="#6534FF"
+            />
+          }
         />
       ) : searchedText ? (
         <NoResults />
