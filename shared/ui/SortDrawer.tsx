@@ -162,9 +162,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   options: {
-    marginHorizontal: 16,
-    marginVertical: 16,
-    marginTop: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    paddingTop: 8,
   },
   option: {
     flexDirection: "row",

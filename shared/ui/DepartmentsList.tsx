@@ -39,8 +39,8 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginLeft: 16,
-    marginTop: 8,
+    paddingLeft: 16,
+    paddingTop: 8,
   },
   contentContainer: {
     flexDirection: "row",

@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     position: "relative",
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 6,
-    marginHorizontal: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
   },
   input: {
     paddingHorizontal: 44,
@@ -50,12 +50,12 @@ const styles = StyleSheet.create({
   },
   search: {
     position: "absolute",
-    left: 12,
+    left: 28,
     zIndex: 1,
   },
   sort: {
     position: "absolute",
-    right: 12,
+    right: 28,
     zIndex: 1,
   },
 });

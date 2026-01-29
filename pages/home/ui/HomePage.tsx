@@ -68,9 +68,9 @@ const HomePage = () => {
 
 const styles = StyleSheet.create({
   cardsContainer: {
-    marginTop: 16,
+    paddingTop: 16,
     paddingBottom: 32,
-    marginHorizontal: 16,
+    paddingHorizontal: 16,
     gap: 4,
   },
   newYearBr: {
