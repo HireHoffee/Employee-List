@@ -6,13 +6,14 @@ import { calculateAge, formatPhoneNumber } from "@/shared/utils/utilsFunctions";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { useGlobalSearchParams, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 
 const EmployeePage = () => {
   const router = useRouter();
   const glob = useGlobalSearchParams();
   const [data, setEmployeesId] = useUnit([$employee, setEmployeeSelectedId]);
+  const [errorImageLoading, setErrorImageLoading] = useState(false);
 
   useEffect(() => {
     setEmployeesId(glob.id as string);
@@ -28,8 +29,15 @@ const EmployeePage = () => {
         <Pressable style={styles.icon} onPress={() => router.back()}>
           {({ pressed }) => <LeftArrowIcon style={[pressed && { opacity: 0.6 }]} />}
         </Pressable>
-        {/* <Image style={styles.image} source={data.avatarUrl} /> (не прогружаются аватары с бэка) */}
-        <Image style={styles.image} source="https://picsum.photos/seed/696/3000/2000" />
+        <Image
+          style={styles.image}
+          source={
+            errorImageLoading
+              ? require("@/shared/assets/images/fallback-image.png")
+              : { uri: data.avatarUrl }
+          }
+          onError={() => setErrorImageLoading(true)}
+        />
         <View style={{ gap: 12 }}>
           <View style={styles.info}>
             <Text

@@ -2,6 +2,7 @@ import { Employee } from "@/entities/employees/types";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { $sortValue } from "../store/utils";
 
@@ -15,6 +16,7 @@ const EmployeeCard = ({
   birthday,
 }: Employee) => {
   const [sortValue] = useUnit([$sortValue]);
+  const [errorImageLoading, setErrorImageLoading] = useState(false);
 
   return (
     <Link href={`/employee/${id}`} asChild>
@@ -27,8 +29,15 @@ const EmployeeCard = ({
             ]}
           >
             <View style={styles.container}>
-              <Image style={styles.image} source={"https://picsum.photos/300/300"} />
-              {/* <Image style={styles.image} source={avatarUrl} /> (не прогружаются аватары с бэка) */}
+              <Image
+                style={styles.image}
+                source={
+                  errorImageLoading
+                    ? require("@/shared/assets/images/fallback-image.png")
+                    : { uri: avatarUrl }
+                }
+                onError={() => setErrorImageLoading(true)}
+              />
               <View>
                 <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
                   <Text
