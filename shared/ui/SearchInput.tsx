@@ -3,10 +3,10 @@ import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import { useUnit } from "effector-react";
 import React from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
-import { setIsDrawerOpen } from "../store/utils";
+import { $sortValue, setIsDrawerOpen } from "../store/utils";
 
 const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void }) => {
-  const setDrawerOpen = useUnit(setIsDrawerOpen);
+  const [sortValue, setDrawerOpen] = useUnit([$sortValue, setIsDrawerOpen]);
 
   return (
     <View style={styles.inputContainer}>
@@ -18,7 +18,14 @@ const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void })
         onChangeText={onChangeText}
       />
       <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
-        {({ pressed }) => <SortIcon width={24} height={24} style={[pressed && { opacity: 0.6 }]} />}
+        {({ pressed }) => (
+          <SortIcon
+            width={24}
+            height={24}
+            style={[pressed && { opacity: 0.6 }]}
+            fill={sortValue ? "#6534ff" : "#9e9ea2"}
+          />
+        )}
       </Pressable>
     </View>
   );
