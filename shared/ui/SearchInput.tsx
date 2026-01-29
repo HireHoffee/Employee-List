@@ -1,6 +1,7 @@
 import SearchIcon from "@/shared/assets/svgs/search-icon.svg";
 import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import { useUnit } from "effector-react";
+import { useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
 
@@ -12,6 +13,7 @@ const SearchInput = ({
   value: string;
 }) => {
   const [sortValue, setDrawerOpen] = useUnit([$sortValue, setIsDrawerOpen]);
+  const [searchValue, setSearchValue] = useState(value);
 
   return (
     <View style={styles.inputContainer}>
@@ -20,8 +22,11 @@ const SearchInput = ({
         style={styles.input}
         placeholder="Введи имя, тег, почту..."
         placeholderTextColor={"#c3c3c6"}
-        onChangeText={onChangeText}
-        value={value}
+        onChangeText={(text) => {
+          onChangeText(text);
+          setSearchValue(text);
+        }}
+        value={searchValue}
       />
       <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
         {({ pressed }) => (
