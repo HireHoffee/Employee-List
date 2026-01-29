@@ -24,7 +24,7 @@ const EmployeePage = () => {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <View style={styles.mainInfoContainer}>
         <Pressable style={styles.icon} onPress={() => router.back()}>
           {({ pressed }) => <LeftArrowIcon style={[pressed && { opacity: 0.6 }]} />}
@@ -48,7 +48,7 @@ const EmployeePage = () => {
           <Text style={{ textAlign: "center", fontSize: 13 }}>{data.department}</Text>
         </View>
       </View>
-      <View style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+      <View style={styles.additionalInfoContainer}>
         <View style={styles.birthdayContainer}>
           <View style={styles.birthday}>
             <StarIcon />
@@ -99,6 +99,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4,
+  },
+  additionalInfoContainer: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    flex: 1,
   },
   birthdayContainer: {
     flexDirection: "row",
