@@ -22,12 +22,7 @@ const EmployeeCard = ({
     <Link href={`/employee/${id}`} asChild>
       <Pressable>
         {({ pressed }) => (
-          <View
-            style={[
-              { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-              pressed && { opacity: 0.6 },
-            ]}
-          >
+          <View style={[styles.wrapper, pressed && { opacity: 0.6 }]}>
             <View style={styles.container}>
               <Image
                 style={styles.image}
@@ -69,6 +64,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 16,
+  },
+  wrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   image: {
     width: 72,

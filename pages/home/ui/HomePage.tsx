@@ -4,9 +4,11 @@ import { $searchedText, $sortedEmployees, setEmployees } from "@/entities/employ
 import { setError } from "@/shared/store/errors";
 import { $isDrawerOpen } from "@/shared/store/utils";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
+import LoadingSkeleton from "@/shared/ui/LoadingSkeleton";
 import NoResults from "@/shared/ui/NoResults";
 import SortDrawer from "@/shared/ui/SortDrawer";
 import TopBar from "@/widgets/topbar/ui/TopBar";
+import { useQuery } from "@tanstack/react-query";
 import { useUnit } from "effector-react";
 import { useEffect } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
@@ -21,21 +23,25 @@ const HomePage = () => {
   const setNewError = useUnit(setError);
   const isDrawerOpen = useUnit($isDrawerOpen);
 
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["employees", selectedDepartment],
+    queryFn: () => getEmployees(selectedDepartment),
+    select: (response) => response.data.items,
+  });
+
+  if (isError) {
+    console.error(error);
+    setNewError(error);
+  }
+
   useEffect(() => {
-    getEmployees(selectedDepartment)
-      .then((response) => {
-        setEmployeesData(response.data.items);
-      })
-      .catch((error) => {
-        console.error(error);
-        setNewError(error);
-      });
-  }, [selectedDepartment]);
+    if (data) setEmployeesData(data);
+  }, [data]);
 
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
-      {sortedEmployees.length > 0 ? (
+      {sortedEmployees.length > 0 && !isLoading ? (
         <FlatList
           data={sortedEmployees}
           renderItem={(data) => {
@@ -60,7 +66,9 @@ const HomePage = () => {
         />
       ) : searchedText ? (
         <NoResults />
-      ) : null}
+      ) : (
+        isLoading && <LoadingSkeleton />
+      )}
       {isDrawerOpen && <SortDrawer />}
     </View>
   );
