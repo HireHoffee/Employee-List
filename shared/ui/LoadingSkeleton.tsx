@@ -9,15 +9,13 @@ const LoadingSkeleton = () => {
       shimmerValue.setValue(0);
       Animated.timing(shimmerValue, {
         toValue: 1,
-        duration: 1000,
+        duration: 1500,
         easing: Easing.linear,
         useNativeDriver: true,
       }).start(() => animate());
     };
 
     animate();
-
-    return console.log("lorem");
   }, [shimmerValue]);
 
   const shimmerTranslateX = shimmerValue.interpolate({
@@ -87,7 +85,6 @@ const styles = StyleSheet.create({
   textContainer: {
     position: "relative",
     overflow: "hidden",
-    borderRadius: 8,
   },
   circle: {
     width: 72,
@@ -98,11 +95,13 @@ const styles = StyleSheet.create({
     width: 144,
     height: 16,
     backgroundColor: "#f0f0f0",
+    borderRadius: 8,
   },
   additional: {
     width: 80,
     height: 12,
     backgroundColor: "#f0f0f0",
+    borderRadius: 8,
   },
   shimmerOverlay: {
     position: "absolute",
