@@ -2,7 +2,7 @@ import { $employee, setEmployeeSelectedId } from "@/entities/employees/store";
 import LeftArrowIcon from "@/shared/assets/svgs/left-arrow-icon.svg";
 import PhoneIcon from "@/shared/assets/svgs/phone-icon.svg";
 import StarIcon from "@/shared/assets/svgs/star-icon.svg";
-import { i18n } from "@/shared/utils/localization";
+import { i18n } from "@/shared/locales";
 import { calculateAge, formatPhoneNumber } from "@/shared/utils/utilsFunctions";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";

@@ -1,6 +1,6 @@
+import { i18n } from "@/shared/locales";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { DEPARTMENTS_LIST } from "../data";
-import { i18n } from "../utils/localization";
 
 type Props = {
   selectedTag: string;

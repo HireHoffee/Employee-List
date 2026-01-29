@@ -1,0 +1,22 @@
+export const english = {
+  departments: {
+    all: "All",
+    android: "Android",
+    ios: "iOS",
+    design: "Design",
+    management: "Management",
+    qa: "QA",
+    back_office: "Back Office",
+    frontend: "Frontend",
+    hr: "HR",
+    pr: "PR",
+    backend: "Backend",
+    support: "Support",
+    analytics: "Analytics",
+  },
+  searchPlaceholder: "Enter name, tag, email...",
+  sort: "Sorting",
+  sortByAlphabet: "Alphabetically",
+  sortByBirthday: "By birthday",
+  cancel: "Cancel",
+};

@@ -1,0 +1,22 @@
+export const russian = {
+  departments: {
+    all: "Все",
+    android: "Android",
+    ios: "iOS",
+    design: "Дизайн",
+    management: "Менеджмент",
+    qa: "QA",
+    back_office: "Бэк-офис",
+    frontend: "Frontend",
+    hr: "HR",
+    pr: "PR",
+    backend: "Backend",
+    support: "Техподдержка",
+    analytics: "Аналитика",
+  },
+  searchPlaceholder: "Введи имя, тег, почту...",
+  sort: "Сортировка",
+  sortByAlphabet: "По алфавиту",
+  sortByBirthday: "По дню рождения",
+  cancel: "Отмена",
+};

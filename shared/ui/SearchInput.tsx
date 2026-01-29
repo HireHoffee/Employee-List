@@ -1,10 +1,10 @@
 import SearchIcon from "@/shared/assets/svgs/search-icon.svg";
 import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
+import { i18n } from "@/shared/locales";
 import { useUnit } from "effector-react";
 import { useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
-import { i18n } from "../utils/localization";
 
 const SearchInput = ({
   onChangeText,

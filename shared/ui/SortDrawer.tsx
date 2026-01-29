@@ -1,10 +1,10 @@
 import SelectedIcon from "@/shared/assets/svgs/selected-icon.svg";
 import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
+import { i18n } from "@/shared/locales";
 import { $sortValue, setIsDrawerOpen, setSortValue } from "@/shared/store/utils";
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
-import { i18n } from "../utils/localization";
 
 const SortDrawer = () => {
   const [sortValue, setSortingValue, setDrawerOpen] = useUnit([

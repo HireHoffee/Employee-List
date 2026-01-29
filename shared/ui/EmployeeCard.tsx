@@ -1,11 +1,11 @@
 import { Employee } from "@/entities/employees/types";
+import { i18n } from "@/shared/locales";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { $sortValue } from "../store/utils";
-import { i18n } from "../utils/localization";
 
 const EmployeeCard = ({
   id,
