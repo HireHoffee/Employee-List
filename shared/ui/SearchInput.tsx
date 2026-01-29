@@ -4,7 +4,13 @@ import { useUnit } from "effector-react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
 
-const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void }) => {
+const SearchInput = ({
+  onChangeText,
+  value,
+}: {
+  onChangeText: (text: string) => void;
+  value: string;
+}) => {
   const [sortValue, setDrawerOpen] = useUnit([$sortValue, setIsDrawerOpen]);
 
   return (
@@ -15,6 +21,7 @@ const SearchInput = ({ onChangeText }: { onChangeText: (text: string) => void })
         placeholder="Введи имя, тег, почту..."
         placeholderTextColor={"#c3c3c6"}
         onChangeText={onChangeText}
+        value={value}
       />
       <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
         {({ pressed }) => (
