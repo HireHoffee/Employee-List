@@ -23,7 +23,7 @@ const HomePage = () => {
   const setNewError = useUnit(setError);
   const isDrawerOpen = useUnit($isDrawerOpen);
 
-  const { data, isLoading, isError, error, refetch, isRefetching } = useQuery({
+  const { data, isFetching, isError, error, refetch } = useQuery({
     queryKey: ["employees", selectedDepartment],
     queryFn: () => getEmployees(selectedDepartment),
     select: (response) => response.data.items,
@@ -41,7 +41,7 @@ const HomePage = () => {
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
-      {sortedEmployees.length > 0 && !isLoading ? (
+      {sortedEmployees.length > 0 && !isFetching ? (
         <FlatList
           data={sortedEmployees}
           renderItem={(data) => {
@@ -65,7 +65,7 @@ const HomePage = () => {
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
-              refreshing={isRefetching}
+              refreshing={isFetching}
               onRefresh={refetch}
               colors={["#6534FF"]}
               tintColor="#6534FF"
@@ -75,7 +75,7 @@ const HomePage = () => {
       ) : searchedText ? (
         <NoResults />
       ) : (
-        isLoading && <LoadingSkeleton />
+        isFetching && <LoadingSkeleton />
       )}
       {isDrawerOpen && <SortDrawer />}
     </View>
