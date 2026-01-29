@@ -9,7 +9,7 @@ const EmployeeCard = ({ id, firstName, lastName, avatarUrl, userTag, department 
       <Pressable>
         {({ pressed }) => (
           <View style={[styles.container, pressed && { opacity: 0.6 }]}>
-            <Image style={styles.image} source={"https://picsum.photos/seed/696/3000/2000"} />
+            <Image style={styles.image} source={"https://picsum.photos/300/300"} />
             {/* <Image style={styles.image} source={avatarUrl} /> (не прогружаются аватары с бэка) */}
             <View>
               <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>

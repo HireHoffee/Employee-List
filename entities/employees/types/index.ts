@@ -8,6 +8,8 @@ export type Employee = {
   position: string;
   birthday: string;
   phone: string;
+} & {
+  newYearBirthdaysStart?: boolean;
 };
 
 export type EmployeesResponse = {

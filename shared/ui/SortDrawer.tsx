@@ -1,12 +1,17 @@
 import SelectedIcon from "@/shared/assets/svgs/selected-icon.svg";
 import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
-import { setIsDrawerOpen } from "@/shared/store/utils";
+import { $sortValue, setIsDrawerOpen, setSortValue } from "@/shared/store/utils";
 import { useUnit } from "effector-react";
 import React, { useEffect, useRef } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
 
 const SortDrawer = () => {
-  const setDrawerOpen = useUnit(setIsDrawerOpen);
+  const [sortValue, setSortingValue, setDrawerOpen] = useUnit([
+    $sortValue,
+    setSortValue,
+    setIsDrawerOpen,
+  ]);
+
   const slideAnim = useRef(new Animated.Value(300)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const panY = useRef(new Animated.Value(0)).current;
@@ -94,18 +99,30 @@ const SortDrawer = () => {
         <View style={styles.draggableLine} />
         <Text style={styles.title}>Сортировка</Text>
         <View style={styles.options}>
-          <Pressable style={styles.option}>
+          <Pressable
+            style={styles.option}
+            onPress={() => {
+              setSortingValue("alphabet");
+              handleClose();
+            }}
+          >
             {({ pressed }) => (
               <>
-                <SelectedIcon style={[pressed && { opacity: 0.6 }]} />
+                {sortValue === "alphabet" ? <SelectedIcon /> : <UnselectedIcon />}
                 <Text style={[pressed && { opacity: 0.6 }]}>По алфавиту</Text>
               </>
             )}
           </Pressable>
-          <Pressable style={styles.option}>
+          <Pressable
+            style={styles.option}
+            onPress={() => {
+              setSortingValue("birthday");
+              handleClose();
+            }}
+          >
             {({ pressed }) => (
               <>
-                <UnselectedIcon style={[pressed && { opacity: 0.6 }]} />
+                {sortValue === "birthday" ? <SelectedIcon /> : <UnselectedIcon />}
                 <Text style={[pressed && { opacity: 0.6 }]}>По дню рождения</Text>
               </>
             )}
