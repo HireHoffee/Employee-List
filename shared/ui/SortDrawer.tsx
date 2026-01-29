@@ -5,6 +5,7 @@ import { $sortValue, setIsDrawerOpen, setSortValue } from "@/shared/store/utils"
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
+import LocalizationSwitcher from "./LocalizationSwitcher";
 
 const SortDrawer = () => {
   const [sortValue, setSortingValue, setDrawerOpen] = useUnit([
@@ -129,6 +130,7 @@ const SortDrawer = () => {
             )}
           </Pressable>
         </View>
+        <LocalizationSwitcher handleClose={handleClose} />
       </Animated.View>
     </View>
   );
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   drawer: {
-    height: 220,
+    minHeight: 220,
     backgroundColor: "#fff",
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,

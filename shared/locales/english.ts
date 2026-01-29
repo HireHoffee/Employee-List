@@ -19,4 +19,7 @@ export const english = {
   sortByAlphabet: "Alphabetically",
   sortByBirthday: "By birthday",
   cancel: "Cancel",
+  russian: "Русский",
+  english: "English",
+  localization: "Localization",
 };
