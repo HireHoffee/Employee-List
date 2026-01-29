@@ -1,7 +1,6 @@
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { setError } from "../store/errors";
 

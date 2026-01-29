@@ -1,7 +1,6 @@
 import SearchIcon from "@/shared/assets/svgs/search-icon.svg";
 import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import { useUnit } from "effector-react";
-import React from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
 
