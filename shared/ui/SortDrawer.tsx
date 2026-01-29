@@ -102,7 +102,7 @@ const SortDrawer = () => {
           <Pressable
             style={styles.option}
             onPress={() => {
-              setSortingValue("alphabet");
+              setSortingValue(sortValue === "alphabet" ? null : "alphabet");
               handleClose();
             }}
           >
@@ -116,7 +116,7 @@ const SortDrawer = () => {
           <Pressable
             style={styles.option}
             onPress={() => {
-              setSortingValue("birthday");
+              setSortingValue(sortValue === "birthday" ? null : "birthday");
               handleClose();
             }}
           >

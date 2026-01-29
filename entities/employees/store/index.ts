@@ -36,7 +36,7 @@ export const $sortedEmployees = combine($foundEmployees, $sortValue, (employees,
 
   if (sortValue === "alphabet") {
     return [
-      ...employees.sort((a, b) =>
+      ...[...employees].sort((a, b) =>
         a.firstName.localeCompare(b.firstName, undefined, { sensitivity: "base" }),
       ),
     ];
@@ -44,7 +44,7 @@ export const $sortedEmployees = combine($foundEmployees, $sortValue, (employees,
 
   if (sortValue === "birthday") {
     const sorted = [
-      ...employees.sort((a, b) => {
+      ...[...employees].sort((a, b) => {
         const dateA = new Date(a.birthday);
         const dateB = new Date(b.birthday);
         const monthDayA = dateA.getMonth() * 100 + dateA.getDate();
