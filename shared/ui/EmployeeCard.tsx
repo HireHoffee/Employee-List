@@ -28,6 +28,7 @@ const EmployeeCard = ({
             <View style={styles.container}>
               <Image
                 style={styles.image}
+                placeholder={require("@/shared/assets/images/placeholder.png")}
                 source={
                   errorImageLoading
                     ? require("@/shared/assets/images/fallback-image.png")
