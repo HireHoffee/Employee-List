@@ -1,6 +1,8 @@
 import { i18n } from "@/shared/locales";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, TextStyle, View } from "react-native";
 import { DEPARTMENTS_LIST } from "../data";
+import { useTheme } from "../hooks/useTheme";
+import { AppText } from "./AppText";
 
 type Props = {
   selectedTag: string;
@@ -8,6 +10,12 @@ type Props = {
 };
 
 const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
+  const { theme } = useTheme();
+  const selectedItem = {
+    fontWeight: 600,
+    color: theme === "light" ? "#050510" : "#FFFFFF",
+  };
+
   return (
     <>
       <ScrollView
@@ -22,15 +30,16 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
             onPress={() => setDepartment(department.apiTag)}
           >
             {({ pressed }) => (
-              <Text
+              <AppText
+                lightText
                 style={[
-                  styles.text,
-                  selectedTag === department.apiTag && styles.selectedItem,
+                  { fontSize: 15 },
+                  selectedTag === department.apiTag && (selectedItem as TextStyle),
                   pressed && { opacity: 0.6 },
                 ]}
               >
                 {i18n.t(`departments.${department.apiTag}`)}
-              </Text>
+              </AppText>
             )}
           </Pressable>
         ))}
@@ -50,17 +59,13 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
   },
-  text: {
-    color: "#97979b",
-    fontSize: 15,
-  },
   bottomBorder: {
     borderBottomWidth: 2,
     borderBottomColor: "#6534ff",
   },
   selectedItem: {
     fontWeight: 600,
-    color: "#000",
+    color: "#050510",
   },
   brLine: {
     height: 0.5,

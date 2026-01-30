@@ -6,6 +6,7 @@ import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
 import LocalizationSwitcher from "./LocalizationSwitcher";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const SortDrawer = () => {
   const [sortValue, setSortingValue, setDrawerOpen] = useUnit([
@@ -131,6 +132,7 @@ const SortDrawer = () => {
           </Pressable>
         </View>
         <LocalizationSwitcher handleClose={handleClose} />
+        <ThemeSwitcher handleClose={handleClose} />
       </Animated.View>
     </View>
   );

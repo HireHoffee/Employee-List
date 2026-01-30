@@ -3,8 +3,10 @@ import SortIcon from "@/shared/assets/svgs/sort-icon.svg";
 import { i18n } from "@/shared/locales";
 import { useUnit } from "effector-react";
 import { useRef, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { useTheme } from "../hooks/useTheme";
 import { $sortValue, setIsDrawerOpen } from "../store/utils";
+import { AppText } from "./AppText";
 
 const SearchInput = ({
   onChangeText,
@@ -17,13 +19,19 @@ const SearchInput = ({
   const [searchValue, setSearchValue] = useState(value);
   const [searchOnFocus, setSearchOnFocus] = useState(false);
   const inputRef = useRef<TextInput>(null);
+  const { theme, dark, light } = useTheme();
 
   return (
     <View style={styles.inputContainer}>
       <SearchIcon width={24} height={24} style={styles.search} />
       <TextInput
         ref={inputRef}
-        style={styles.input}
+        style={[
+          styles.input,
+          theme === "light"
+            ? { backgroundColor: light.secondaryBackground, color: light.text }
+            : { backgroundColor: dark.secondaryBackground, color: dark.text },
+        ]}
         placeholder={i18n.t("searchPlaceholder")}
         placeholderTextColor={"#c3c3c6"}
         onChangeText={(text) => {
@@ -35,7 +43,7 @@ const SearchInput = ({
         onBlur={() => {
           setTimeout(() => {
             setSearchOnFocus(false);
-          }, 0);
+          }, 100);
         }}
       />
       {!searchOnFocus && (
@@ -60,7 +68,9 @@ const SearchInput = ({
           }}
         >
           {({ pressed }) => (
-            <Text style={[styles.cancel, pressed && { opacity: 0.6 }]}>{i18n.t("cancel")}</Text>
+            <AppText primary style={[styles.cancel, pressed && { opacity: 0.6 }]}>
+              {i18n.t("cancel")}
+            </AppText>
           )}
         </Pressable>
       )}
@@ -82,7 +92,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     height: 40,
     borderRadius: 16,
-    backgroundColor: "#f7f7f8",
     flex: 1,
     fontSize: 15,
   },
@@ -97,7 +106,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   cancel: {
-    color: "#6534FF",
     fontSize: 14,
     fontWeight: 600,
   },

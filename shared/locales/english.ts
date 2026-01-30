@@ -30,4 +30,7 @@ export const english = {
   waiting: "Just a second, loading...",
   noOneFound: "We didn't find anyone",
   tryAnotherQuery: "Try adjusting your query",
+  theme: "Theme",
+  lightTheme: "Light",
+  darkTheme: "Dark",
 };

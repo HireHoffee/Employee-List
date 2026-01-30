@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { i18n } from "../locales";
+import { AppText } from "./AppText";
 
 const NoResults = () => {
   return (
@@ -10,8 +11,10 @@ const NoResults = () => {
         source={require("@/shared/assets/images/lens-icon.png")}
       />
       <View style={{ paddingTop: 8, gap: 12 }}>
-        <Text style={styles.errorTitle}>{i18n.t("noOneFound")}</Text>
-        <Text style={styles.errorSubtitle}>{i18n.t("tryAnotherQuery")}</Text>
+        <AppText style={styles.errorTitle}>{i18n.t("noOneFound")}</AppText>
+        <AppText lightText style={styles.errorSubtitle}>
+          {i18n.t("tryAnotherQuery")}
+        </AppText>
       </View>
     </View>
   );
@@ -31,7 +34,6 @@ const styles = StyleSheet.create({
   errorSubtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#97979B",
   },
 });
 

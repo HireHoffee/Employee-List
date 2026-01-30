@@ -1,9 +1,10 @@
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { i18n } from "../locales";
 import { setError } from "../store/errors";
+import { AppText } from "./AppText";
 
 const CustomErrorBoundary = () => {
   const router = useRouter();
@@ -16,15 +17,19 @@ const CustomErrorBoundary = () => {
         source={require("@/shared/assets/images/alien-icon.png")}
       />
       <View style={{ paddingTop: 8, gap: 12 }}>
-        <Text style={styles.errorTitle}>{i18n.t("brokenText")}</Text>
-        <Text style={styles.errorSubtitle}>{i18n.t("tryingToFixText")}</Text>
+        <AppText style={styles.errorTitle}>{i18n.t("brokenText")}</AppText>
+        <AppText lightText style={styles.errorSubtitle}>
+          {i18n.t("tryingToFixText")}
+        </AppText>
         <Pressable
           onPress={() => {
             router.navigate("/");
             clearError(null);
           }}
         >
-          <Text style={styles.retry}>{i18n.t("tryAgainText")}</Text>
+          <AppText primary style={styles.retry}>
+            {i18n.t("tryAgainText")}
+          </AppText>
         </Pressable>
       </View>
     </View>
@@ -45,12 +50,10 @@ const styles = StyleSheet.create({
   errorSubtitle: {
     fontSize: 16,
     textAlign: "center",
-    color: "#97979B",
   },
   retry: {
     fontSize: 16,
     textAlign: "center",
-    color: "#6534FF",
     fontWeight: 600,
   },
 });

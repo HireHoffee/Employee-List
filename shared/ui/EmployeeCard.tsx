@@ -4,8 +4,9 @@ import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { $sortValue } from "../store/utils";
+import { AppText } from "./AppText";
 
 const EmployeeCard = ({
   id,
@@ -36,16 +37,18 @@ const EmployeeCard = ({
               />
               <View>
                 <View style={{ flexDirection: "row", gap: 4, alignItems: "center" }}>
-                  <Text
+                  <AppText
                     style={{ fontWeight: "600", fontSize: 16 }}
-                  >{`${firstName} ${lastName}`}</Text>
-                  <Text style={{ color: "#97979b" }}>{userTag}</Text>
+                  >{`${firstName} ${lastName}`}</AppText>
+                  <AppText lightText>{userTag}</AppText>
                 </View>
-                <Text style={{ fontSize: 13 }}>{department}</Text>
+                <AppText secondary style={{ fontSize: 13 }}>
+                  {department}
+                </AppText>
               </View>
             </View>
             {sortValue === "birthday" ? (
-              <Text style={{ fontSize: 15 }}>
+              <AppText style={{ fontSize: 15 }}>
                 {new Date(birthday).toLocaleDateString(
                   `${i18n.locale === "ru" ? "ru-RU" : "en-US"}`,
                   {
@@ -53,7 +56,7 @@ const EmployeeCard = ({
                     day: "numeric",
                   },
                 )}
-              </Text>
+              </AppText>
             ) : null}
           </View>
         )}

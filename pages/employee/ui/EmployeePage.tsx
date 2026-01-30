@@ -2,19 +2,22 @@ import { $employee, setEmployeeSelectedId } from "@/entities/employees/store";
 import LeftArrowIcon from "@/shared/assets/svgs/left-arrow-icon.svg";
 import PhoneIcon from "@/shared/assets/svgs/phone-icon.svg";
 import StarIcon from "@/shared/assets/svgs/star-icon.svg";
+import { useTheme } from "@/shared/hooks/useTheme";
 import { i18n } from "@/shared/locales";
+import { AppText } from "@/shared/ui/AppText";
 import { calculateAge, formatPhoneNumber } from "@/shared/utils/utilsFunctions";
 import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { Linking, Pressable, StyleSheet, View } from "react-native";
 
 const EmployeePage = () => {
   const router = useRouter();
   const glob = useGlobalSearchParams();
   const [data, setEmployeesId] = useUnit([$employee, setEmployeeSelectedId]);
   const [errorImageLoading, setErrorImageLoading] = useState(false);
+  const { theme, dark, light } = useTheme();
 
   useEffect(() => {
     setEmployeesId(glob.id as string);
@@ -26,9 +29,21 @@ const EmployeePage = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.mainInfoContainer}>
+      <View
+        style={[
+          styles.mainInfoContainer,
+          theme === "light"
+            ? { backgroundColor: light.secondaryBackground }
+            : { backgroundColor: dark.secondaryBackground },
+        ]}
+      >
         <Pressable style={styles.icon} onPress={() => router.back()}>
-          {({ pressed }) => <LeftArrowIcon style={[pressed && { opacity: 0.6 }]} />}
+          {({ pressed }) => (
+            <LeftArrowIcon
+              style={[pressed && { opacity: 0.6 }]}
+              fill={theme === "light" ? light.text : dark.text}
+            />
+          )}
         </Pressable>
         <Image
           style={styles.image}
@@ -41,19 +56,26 @@ const EmployeePage = () => {
         />
         <View style={{ gap: 12 }}>
           <View style={styles.info}>
-            <Text
+            <AppText
               style={{ fontWeight: "600", fontSize: 24 }}
-            >{`${data.firstName} ${data.lastName}`}</Text>
-            <Text style={{ color: "#97979b" }}>{data.userTag}</Text>
+            >{`${data.firstName} ${data.lastName}`}</AppText>
+            <AppText lightText>{data.userTag}</AppText>
           </View>
-          <Text style={{ textAlign: "center", fontSize: 13 }}>{data.department}</Text>
+          <AppText style={{ textAlign: "center", fontSize: 13 }}>{data.department}</AppText>
         </View>
       </View>
-      <View style={styles.additionalInfoContainer}>
+      <View
+        style={[
+          styles.additionalInfoContainer,
+          theme === "light"
+            ? { backgroundColor: light.background }
+            : { backgroundColor: dark.background },
+        ]}
+      >
         <View style={styles.birthdayContainer}>
           <View style={styles.birthday}>
-            <StarIcon />
-            <Text style={{ fontSize: 16 }}>
+            <StarIcon fill={theme === "light" ? light.text : dark.text} />
+            <AppText style={{ fontSize: 16 }}>
               {new Date(data.birthday).toLocaleDateString(
                 `${i18n.locale === "ru" ? "ru-RU" : "en-US"}`,
                 {
@@ -62,17 +84,17 @@ const EmployeePage = () => {
                   day: "numeric",
                 },
               )}
-            </Text>
+            </AppText>
           </View>
-          <Text style={{ color: "#97979B", fontSize: 16 }}>
+          <AppText lightText style={{ fontSize: 16 }}>
             {calculateAge(data.birthday, i18n.locale)}
-          </Text>
+          </AppText>
         </View>
         <Pressable onPress={() => Linking.openURL(`tel:${data.phone}`)}>
           {({ pressed }) => (
             <View style={[styles.phoneContainer, pressed && { opacity: 0.6 }]}>
-              <PhoneIcon />
-              <Text style={{ fontSize: 16 }}>{formatPhoneNumber(data.phone)}</Text>
+              <PhoneIcon fill={theme === "light" ? light.text : dark.text} />
+              <AppText style={{ fontSize: 16 }}>{formatPhoneNumber(data.phone)}</AppText>
             </View>
           )}
         </Pressable>
@@ -87,7 +109,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 16,
-    backgroundColor: "#f7f7f8",
     paddingTop: 28,
     paddingBottom: 42,
   },
@@ -109,7 +130,6 @@ const styles = StyleSheet.create({
   additionalInfoContainer: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
     flex: 1,
   },
   birthdayContainer: {

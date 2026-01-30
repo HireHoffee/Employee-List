@@ -1,7 +1,7 @@
 import { createEvent, createStore } from "effector";
 import { i18n } from "../locales";
 
-export type Locale = "en" | "ru";
+type Locale = "en" | "ru";
 
 export const changeLanguage = createEvent<Locale>();
 

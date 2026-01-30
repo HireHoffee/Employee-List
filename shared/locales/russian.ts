@@ -30,4 +30,7 @@ export const russian = {
   waiting: "Секундочку, гружусь...",
   noOneFound: "Мы никого не нашли",
   tryAnotherQuery: "Попробуй скорректировать запрос",
+  theme: "Тема",
+  lightTheme: "Светлая",
+  darkTheme: "Тёмная",
 };
