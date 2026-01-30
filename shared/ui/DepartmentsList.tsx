@@ -35,16 +35,7 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
           </Pressable>
         ))}
       </ScrollView>
-      <View
-        style={{
-          height: 0.5,
-          backgroundColor: "#c3c3c6",
-          width: "100%",
-          position: "absolute",
-          bottom: 0,
-          zIndex: -1,
-        }}
-      ></View>
+      <View style={styles.brLine}></View>
     </>
   );
 };
@@ -70,6 +61,14 @@ const styles = StyleSheet.create({
   selectedItem: {
     fontWeight: 600,
     color: "#000",
+  },
+  brLine: {
+    height: 0.5,
+    backgroundColor: "#c3c3c6",
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+    zIndex: -1,
   },
 });
 
