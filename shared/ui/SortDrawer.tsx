@@ -4,7 +4,9 @@ import { i18n } from "@/shared/locales";
 import { $sortValue, setIsDrawerOpen, setSortValue } from "@/shared/store/utils";
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
-import { Animated, PanResponder, Pressable, StyleSheet, Text, View } from "react-native";
+import { Animated, PanResponder, Pressable, StyleSheet, View } from "react-native";
+import { useTheme } from "../hooks/useTheme";
+import { AppText } from "./AppText";
 import LocalizationSwitcher from "./LocalizationSwitcher";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -14,6 +16,7 @@ const SortDrawer = () => {
     setSortValue,
     setIsDrawerOpen,
   ]);
+  const { theme, dark, light } = useTheme();
 
   const slideAnim = useRef(new Animated.Value(300)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -93,14 +96,24 @@ const SortDrawer = () => {
       <Animated.View
         style={[
           styles.drawer,
+          theme === "light"
+            ? { backgroundColor: light.background }
+            : { backgroundColor: dark.background },
           {
             transform: [{ translateY: Animated.add(slideAnim, panY) }],
           },
         ]}
         {...panResponder.panHandlers}
       >
-        <View style={styles.draggableLine} />
-        <Text style={styles.title}>{i18n.t("sort")}</Text>
+        <View
+          style={[
+            styles.draggableLine,
+            theme === "light"
+              ? { backgroundColor: light.lightText }
+              : { backgroundColor: dark.lightText },
+          ]}
+        />
+        <AppText style={styles.title}>{i18n.t("sort")}</AppText>
         <View style={styles.options}>
           <Pressable
             style={styles.option}
@@ -112,7 +125,7 @@ const SortDrawer = () => {
             {({ pressed }) => (
               <>
                 {sortValue === "alphabet" ? <SelectedIcon /> : <UnselectedIcon />}
-                <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByAlphabet")}</Text>
+                <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByAlphabet")}</AppText>
               </>
             )}
           </Pressable>
@@ -126,7 +139,7 @@ const SortDrawer = () => {
             {({ pressed }) => (
               <>
                 {sortValue === "birthday" ? <SelectedIcon /> : <UnselectedIcon />}
-                <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByBirthday")}</Text>
+                <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("sortByBirthday")}</AppText>
               </>
             )}
           </Pressable>
@@ -156,7 +169,6 @@ const styles = StyleSheet.create({
   },
   drawer: {
     minHeight: 220,
-    backgroundColor: "#fff",
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
     paddingHorizontal: 16,

@@ -1,16 +1,17 @@
 import SelectedIcon from "@/shared/assets/svgs/selected-icon.svg";
 import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 import { i18n } from "../locales";
+import { AppText } from "./AppText";
 
 const ThemeSwitcher = ({ handleClose }: { handleClose: () => void }) => {
   const { theme, changeTheme } = useTheme();
 
   return (
     <>
-      <Text style={styles.title}>{i18n.t("theme")}</Text>
+      <AppText style={styles.title}>{i18n.t("theme")}</AppText>
       <View style={styles.options}>
         <Pressable
           style={styles.option}
@@ -22,7 +23,7 @@ const ThemeSwitcher = ({ handleClose }: { handleClose: () => void }) => {
           {({ pressed }) => (
             <>
               {theme === "light" ? <SelectedIcon /> : <UnselectedIcon />}
-              <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("lightTheme")}</Text>
+              <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("lightTheme")}</AppText>
             </>
           )}
         </Pressable>
@@ -36,7 +37,7 @@ const ThemeSwitcher = ({ handleClose }: { handleClose: () => void }) => {
           {({ pressed }) => (
             <>
               {theme === "dark" ? <SelectedIcon /> : <UnselectedIcon />}
-              <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("darkTheme")}</Text>
+              <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("darkTheme")}</AppText>
             </>
           )}
         </Pressable>

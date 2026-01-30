@@ -1,16 +1,17 @@
 import SelectedIcon from "@/shared/assets/svgs/selected-icon.svg";
 import UnselectedIcon from "@/shared/assets/svgs/unselected-icon.svg";
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { useTranslation } from "../hooks/useTranslation";
 import { i18n } from "../locales";
+import { AppText } from "./AppText";
 
 const LocalizationSwitcher = ({ handleClose }: { handleClose: () => void }) => {
   const { locale, changeLanguage } = useTranslation();
 
   return (
     <>
-      <Text style={styles.title}>{i18n.t("localization")}</Text>
+      <AppText style={styles.title}>{i18n.t("localization")}</AppText>
       <View style={styles.options}>
         <Pressable
           style={styles.option}
@@ -22,7 +23,7 @@ const LocalizationSwitcher = ({ handleClose }: { handleClose: () => void }) => {
           {({ pressed }) => (
             <>
               {locale === "ru" ? <SelectedIcon /> : <UnselectedIcon />}
-              <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("russian")}</Text>
+              <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("russian")}</AppText>
             </>
           )}
         </Pressable>
@@ -36,7 +37,7 @@ const LocalizationSwitcher = ({ handleClose }: { handleClose: () => void }) => {
           {({ pressed }) => (
             <>
               {locale === "en" ? <SelectedIcon /> : <UnselectedIcon />}
-              <Text style={[pressed && { opacity: 0.6 }]}>{i18n.t("english")}</Text>
+              <AppText style={[pressed && { opacity: 0.6 }]}>{i18n.t("english")}</AppText>
             </>
           )}
         </Pressable>
