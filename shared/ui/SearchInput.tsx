@@ -32,7 +32,11 @@ const SearchInput = ({
         }}
         value={searchValue}
         onFocus={() => setSearchOnFocus(true)}
-        onBlur={() => setSearchOnFocus(false)}
+        onBlur={() => {
+          setTimeout(() => {
+            setSearchOnFocus(false);
+          }, 0);
+        }}
       />
       {!searchOnFocus && (
         <Pressable style={styles.sort} onPress={() => setDrawerOpen(true)}>
