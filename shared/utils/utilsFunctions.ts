@@ -2,12 +2,16 @@ export function formatPhoneNumber(phone: string) {
   if (!phone) return;
 
   const digits = phone.replace(/\D/g, "");
-  if (digits.length !== 11 || digits[0] !== "7") {
+  if (digits.length < 10) {
     throw new Error("Неверный формат номера");
   }
 
-  const formatted = `+7 (${digits.slice(1, 4)}) ${digits.slice(4, 7)} ${digits.slice(7, 9)} ${digits.slice(9, 11)}`;
-  return formatted;
+  const normalized = digits[0] === "8" ? "7" + digits.slice(1) : digits;
+  if (normalized.length === 11 && normalized[0] === "7") {
+    return `+7 (${normalized.slice(1, 4)}) ${normalized.slice(4, 7)} ${normalized.slice(7, 9)} ${normalized.slice(9, 11)}`;
+  }
+
+  return `+${normalized}`;
 }
 
 export function calculateAge(birthDate: string, locale: string): string | undefined {
