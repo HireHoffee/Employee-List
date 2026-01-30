@@ -1,58 +1,59 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Animated, Easing, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+
+interface SkeletonItemProps {
+  style?: StyleProp<ViewStyle>;
+  animatedValue: Animated.Value;
+}
+
+const SkeletonItem = ({ style, animatedValue }: SkeletonItemProps) => {
+  const translateX = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["-100%", "100%"],
+  });
+
+  return (
+    <View style={[styles.skeletonBase, style]}>
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            transform: [{ translateX }],
+          },
+        ]}
+      >
+        <View style={styles.shimmerGradient} />
+      </Animated.View>
+    </View>
+  );
+};
 
 const LoadingSkeleton = () => {
   const shimmerValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const animate = () => {
-      shimmerValue.setValue(0);
+    const loop = Animated.loop(
       Animated.timing(shimmerValue, {
         toValue: 1,
         duration: 1500,
-        easing: Easing.linear,
+        easing: Easing.inOut(Easing.ease),
         useNativeDriver: true,
-      }).start(() => animate());
-    };
+      }),
+    );
 
-    animate();
+    loop.start();
+
+    return () => loop.stop();
   }, [shimmerValue]);
-
-  const shimmerTranslateX = shimmerValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [-200, 200],
-  });
-
-  const ShimmerOverlay = ({ style }: { style?: StyleProp<ViewStyle> }) => (
-    <Animated.View
-      style={[
-        style,
-        {
-          transform: [{ translateX: shimmerTranslateX }],
-        },
-      ]}
-    >
-      <View style={styles.shimmerGradient} />
-    </Animated.View>
-  );
 
   return (
     <View style={styles.wrapper}>
       {[1, 2, 3, 4, 5].map((item) => (
         <View key={item} style={styles.container}>
-          <View style={styles.skeletonWrapper}>
-            <View style={styles.circle}></View>
-            <ShimmerOverlay style={styles.shimmerOverlay} />
-          </View>
+          <SkeletonItem animatedValue={shimmerValue} style={styles.circle} />
           <View style={styles.textWrapper}>
-            <View style={styles.textContainer}>
-              <View style={styles.text}></View>
-              <ShimmerOverlay style={styles.shimmerOverlay} />
-            </View>
-            <View style={styles.textContainer}>
-              <View style={styles.additional}></View>
-              <ShimmerOverlay style={styles.shimmerOverlay} />
-            </View>
+            <SkeletonItem animatedValue={shimmerValue} style={styles.text} />
+            <SkeletonItem animatedValue={shimmerValue} style={styles.additional} />
           </View>
         </View>
       ))}
@@ -68,51 +69,35 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   container: {
-    height: 80,
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
   },
-  skeletonWrapper: {
-    position: "relative",
+  skeletonBase: {
+    backgroundColor: "#E1E9EE",
     overflow: "hidden",
-    borderRadius: 36,
   },
   textWrapper: {
-    gap: 6,
+    gap: 8,
     flex: 1,
-  },
-  textContainer: {
-    position: "relative",
-    overflow: "hidden",
   },
   circle: {
     width: 72,
     height: 72,
-    backgroundColor: "#f0f0f0",
+    borderRadius: 36,
   },
   text: {
-    width: 144,
+    width: "80%",
     height: 16,
-    backgroundColor: "#f0f0f0",
     borderRadius: 8,
   },
   additional: {
-    width: 80,
+    width: "40%",
     height: 12,
-    backgroundColor: "#f0f0f0",
     borderRadius: 8,
   },
-  shimmerOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    overflow: "hidden",
-  },
   shimmerGradient: {
-    width: "50%",
+    width: "100%",
     height: "100%",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
     transform: [{ skewX: "-20deg" }],
