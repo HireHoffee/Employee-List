@@ -1,11 +1,14 @@
 import { useNetworkStatus } from "@/shared/hooks/useNetworkStatus";
 import { $locale } from "@/shared/store/locale";
+import { changeTheme } from "@/shared/store/themes";
 import CustomErrorBoundary from "@/shared/ui/CustomErrorBoundary";
 import { ConnectionFailed, ConnectionSuccess } from "@/shared/ui/InternetConnectionPopups";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUnit } from "effector-react";
 import { Stack } from "expo-router";
 import { Try } from "expo-router/build/views/Try";
+import { useEffect } from "react";
+import { useColorScheme } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const queryClient = new QueryClient({
@@ -20,6 +23,14 @@ const queryClient = new QueryClient({
 export default function RootLayout() {
   const { isConnected, prevConnected, isInitialized } = useNetworkStatus();
   const locale = useUnit($locale);
+  const changeAppTheme = useUnit(changeTheme);
+  const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    if (colorScheme) {
+      changeAppTheme(colorScheme);
+    }
+  }, [colorScheme]);
 
   return (
     <Try catch={CustomErrorBoundary}>
