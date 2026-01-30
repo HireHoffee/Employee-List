@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Employee-List",
-    "slug": "Employee-List",
+    "slug": "employees-list",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./shared/assets/images/icon.png",
@@ -9,7 +9,13 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "CFBundleLocalizations": [
+          "ru",
+          "en"
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +25,8 @@
         "monochromeImage": "./shared/assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.hirehoffee.employeeslist"
     },
     "web": {
       "output": "static",
@@ -43,8 +50,14 @@
         "expo-localization",
         {
           "supportedLocales": {
-            "ios": ["ru", "en"],
-            "android": ["ru", "en"]
+            "ios": [
+              "ru",
+              "en"
+            ],
+            "android": [
+              "ru",
+              "en"
+            ]
           }
         }
       ]
@@ -52,6 +65,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "021d49e6-1947-4f4a-ae02-8330b12a5a3c"
+      }
+    },
+    "owner": "hirehoffee"
   }
 }
