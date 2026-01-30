@@ -22,4 +22,12 @@ export const english = {
   russian: "Русский",
   english: "English",
   localization: "Localization",
+  brokenText: "Some superintelligence broke everything",
+  tryingToFixText: "We'll try to fix it quickly",
+  tryAgainText: "Try again",
+  cannotUpdateData: "Cannot update data.",
+  checkConnection: "Check your internet connection.",
+  waiting: "Just a second, loading...",
+  noOneFound: "We didn't find anyone",
+  tryAnotherQuery: "Try adjusting your query",
 };

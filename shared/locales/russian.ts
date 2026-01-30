@@ -22,4 +22,12 @@ export const russian = {
   russian: "Русский",
   english: "English",
   localization: "Локализация",
+  brokenText: "Какой-то сверхразум все сломал",
+  tryingToFixText: "Постараемся быстро починить",
+  tryAgainText: "Попробовать снова",
+  cannotUpdateData: "Не могу обновить данные. ",
+  checkConnection: "Проверь соединение с интернетом.",
+  waiting: "Секундочку, гружусь...",
+  noOneFound: "Мы никого не нашли",
+  tryAnotherQuery: "Попробуй скорректировать запрос",
 };

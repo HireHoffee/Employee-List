@@ -1,12 +1,13 @@
 import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { i18n } from "../locales";
 
 export const ConnectionFailed = () => {
   return (
     <View style={[styles.container, { backgroundColor: "#f44336" }]}>
-      <Text style={styles.text}>Не могу обновить данные. </Text>
-      <Text style={styles.text}>Проверь соединение с интернетом.</Text>
+      <Text style={styles.text}>{i18n.t("cannotUpdateData")}</Text>
+      <Text style={styles.text}>{i18n.t("checkConnection")}</Text>
     </View>
   );
 };
@@ -23,7 +24,7 @@ export const ConnectionSuccess = () => {
     <>
       {isFetching === 1 && (
         <View style={[styles.container, { backgroundColor: "#6534ff" }]}>
-          <Text style={styles.text}>Секундочку, гружусь...</Text>
+          <Text style={styles.text}>{i18n.t("waiting")}</Text>
         </View>
       )}
     </>

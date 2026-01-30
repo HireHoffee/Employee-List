@@ -2,6 +2,7 @@ import { useUnit } from "effector-react";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { i18n } from "../locales";
 import { setError } from "../store/errors";
 
 const CustomErrorBoundary = () => {
@@ -15,15 +16,15 @@ const CustomErrorBoundary = () => {
         source={require("@/shared/assets/images/alien-icon.png")}
       />
       <View style={{ paddingTop: 8, gap: 12 }}>
-        <Text style={styles.errorTitle}>Какой-то сверхразум все сломал</Text>
-        <Text style={styles.errorSubtitle}>Постараемся быстро починить</Text>
+        <Text style={styles.errorTitle}>{i18n.t("brokenText")}</Text>
+        <Text style={styles.errorSubtitle}>{i18n.t("tryingToFixText")}</Text>
         <Pressable
           onPress={() => {
             router.navigate("/");
             clearError(null);
           }}
         >
-          <Text style={styles.retry}>Попробовать снова</Text>
+          <Text style={styles.retry}>{i18n.t("tryAgainText")}</Text>
         </Pressable>
       </View>
     </View>

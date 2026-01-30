@@ -1,5 +1,6 @@
 import { Image } from "expo-image";
 import { StyleSheet, Text, View } from "react-native";
+import { i18n } from "../locales";
 
 const NoResults = () => {
   return (
@@ -9,8 +10,8 @@ const NoResults = () => {
         source={require("@/shared/assets/images/lens-icon.png")}
       />
       <View style={{ paddingTop: 8, gap: 12 }}>
-        <Text style={styles.errorTitle}>Мы никого не нашли</Text>
-        <Text style={styles.errorSubtitle}>Попробуй скорректировать запрос</Text>
+        <Text style={styles.errorTitle}>{i18n.t("noOneFound")}</Text>
+        <Text style={styles.errorSubtitle}>{i18n.t("tryAnotherQuery")}</Text>
       </View>
     </View>
   );
