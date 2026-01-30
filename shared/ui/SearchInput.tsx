@@ -21,6 +21,9 @@ const SearchInput = ({
   const inputRef = useRef<TextInput>(null);
   const { theme, dark, light } = useTheme();
 
+  const iconBase = theme === "light" ? light.lightText : dark.lightText;
+  const iconPrimary = theme === "light" ? light.primary : dark.primary;
+
   return (
     <View style={styles.inputContainer}>
       <SearchIcon width={24} height={24} style={styles.search} />
@@ -33,7 +36,7 @@ const SearchInput = ({
             : { backgroundColor: dark.secondaryBackground, color: dark.text },
         ]}
         placeholder={i18n.t("searchPlaceholder")}
-        placeholderTextColor={"#c3c3c6"}
+        placeholderTextColor={theme === "light" ? light.lightText : dark.lightText}
         onChangeText={(text) => {
           onChangeText(text);
           setSearchValue(text);
@@ -53,7 +56,7 @@ const SearchInput = ({
               width={24}
               height={24}
               style={[pressed && { opacity: 0.6 }]}
-              fill={sortValue ? "#6534ff" : "#9e9ea2"}
+              fill={sortValue ? iconPrimary : iconBase}
             />
           )}
         </Pressable>

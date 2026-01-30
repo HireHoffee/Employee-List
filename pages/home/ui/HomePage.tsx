@@ -1,8 +1,10 @@
 import { $selectedDepartment } from "@/entities/departments/store";
 import { getEmployees } from "@/entities/employees/api";
 import { $searchedText, $sortedEmployees, setEmployees } from "@/entities/employees/store";
+import { useTheme } from "@/shared/hooks/useTheme";
 import { setError } from "@/shared/store/errors";
 import { $isDrawerOpen } from "@/shared/store/utils";
+import { AppText } from "@/shared/ui/AppText";
 import EmployeeCard from "@/shared/ui/EmployeeCard";
 import LoadingSkeleton from "@/shared/ui/LoadingSkeleton";
 import NoResults from "@/shared/ui/NoResults";
@@ -11,7 +13,7 @@ import TopBar from "@/widgets/topbar/ui/TopBar";
 import { useQuery } from "@tanstack/react-query";
 import { useUnit } from "effector-react";
 import { useEffect } from "react";
-import { FlatList, RefreshControl, StyleSheet, Text, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
 
 const HomePage = () => {
   const [sortedEmployees, setEmployeesData, selectedDepartment, searchedText] = useUnit([
@@ -22,6 +24,7 @@ const HomePage = () => {
   ]);
   const setNewError = useUnit(setError);
   const isDrawerOpen = useUnit($isDrawerOpen);
+  const { theme, light, dark } = useTheme();
 
   const { data, isFetching, isError, error, refetch } = useQuery({
     queryKey: ["employees", selectedDepartment],
@@ -38,6 +41,9 @@ const HomePage = () => {
     if (data) setEmployeesData(data);
   }, [data]);
 
+  const brLineTheme =
+    theme === "light" ? { backgroundColor: light.lightText } : { backgroundColor: dark.lightText };
+
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
@@ -48,11 +54,11 @@ const HomePage = () => {
             return data.item.newYearBirthdaysStart ? (
               <>
                 <View style={styles.newYearBr}>
-                  <View style={styles.brLine}></View>
-                  <Text style={{ color: "#C3C3C6", fontSize: 15 }}>
+                  <View style={[styles.brLine, brLineTheme]}></View>
+                  <AppText lightText style={{ fontSize: 15 }}>
                     {new Date().getFullYear() + 1}{" "}
-                  </Text>
-                  <View style={styles.brLine}></View>
+                  </AppText>
+                  <View style={[styles.brLine, brLineTheme]}></View>
                 </View>
                 <EmployeeCard {...data.item} />
               </>
@@ -67,8 +73,8 @@ const HomePage = () => {
             <RefreshControl
               refreshing={isFetching}
               onRefresh={refetch}
-              colors={["#6534FF"]}
-              tintColor="#6534FF"
+              colors={[theme === "light" ? light.primary : dark.primary]}
+              tintColor={theme === "light" ? light.primary : dark.primary}
             />
           }
         />
@@ -100,7 +106,6 @@ const styles = StyleSheet.create({
   brLine: {
     width: 72,
     height: 2,
-    backgroundColor: "#C3C3C6",
     borderRadius: 2,
   },
 });

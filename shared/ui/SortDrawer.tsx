@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
   draggableLine: {
     width: 56,
     height: 4,
-    backgroundColor: "#c3c3c6",
     borderRadius: 2,
     marginVertical: 10,
     alignSelf: "center",

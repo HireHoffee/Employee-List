@@ -10,10 +10,15 @@ type Props = {
 };
 
 const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
-  const { theme } = useTheme();
+  const { theme, light, dark } = useTheme();
+
   const selectedItem = {
     fontWeight: 600,
-    color: theme === "light" ? "#050510" : "#FFFFFF",
+    color: theme === "light" ? light.text : dark.text,
+  };
+  const bottomBorder = {
+    borderBottomWidth: 2,
+    borderBottomColor: theme === "light" ? light.primary : dark.primary,
   };
 
   return (
@@ -26,7 +31,7 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
         {DEPARTMENTS_LIST.map((department) => (
           <Pressable
             key={department.id}
-            style={[styles.department, selectedTag === department.apiTag && styles.bottomBorder]}
+            style={[styles.department, selectedTag === department.apiTag && bottomBorder]}
             onPress={() => setDepartment(department.apiTag)}
           >
             {({ pressed }) => (
@@ -44,7 +49,14 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
           </Pressable>
         ))}
       </ScrollView>
-      <View style={styles.brLine}></View>
+      <View
+        style={[
+          styles.brLine,
+          theme === "light"
+            ? { backgroundColor: light.lightText }
+            : { backgroundColor: dark.lightText },
+        ]}
+      ></View>
     </>
   );
 };
@@ -59,17 +71,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
   },
-  bottomBorder: {
-    borderBottomWidth: 2,
-    borderBottomColor: "#6534ff",
-  },
-  selectedItem: {
-    fontWeight: 600,
-    color: "#050510",
-  },
   brLine: {
     height: 0.5,
-    backgroundColor: "#c3c3c6",
     width: "100%",
     position: "absolute",
     bottom: 0,
