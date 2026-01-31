@@ -4,17 +4,10 @@ import { basicStyles } from "@/shared/utils/basicStyles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Employee() {
-  const { theme, dark, light } = useTheme();
+  const { changeStyles } = useTheme();
 
   return (
-    <SafeAreaView
-      style={[
-        basicStyles,
-        theme === "light"
-          ? { backgroundColor: light.secondaryBackground }
-          : { backgroundColor: dark.secondaryBackground },
-      ]}
-    >
+    <SafeAreaView style={[basicStyles, changeStyles([["backgroundColor", "secondaryBackground"]])]}>
       <EmployeePage />
     </SafeAreaView>
   );

@@ -8,17 +8,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   const error = useUnit($error);
-  const { theme, dark, light } = useTheme();
+  const { changeStyles } = useTheme();
 
   return (
-    <SafeAreaView
-      style={[
-        basicStyles,
-        theme === "light"
-          ? { backgroundColor: light.background }
-          : { backgroundColor: dark.background },
-      ]}
-    >
+    <SafeAreaView style={[basicStyles, changeStyles([["backgroundColor", "background"]])]}>
       {error ? <ErrorPage /> : <HomePage />}
     </SafeAreaView>
   );

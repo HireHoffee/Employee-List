@@ -4,7 +4,7 @@
     "slug": "employees-list",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./shared/assets/images/icon.png",
+    "icon": "./shared/assets/images/main-icon.png",
     "scheme": "employeelist",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

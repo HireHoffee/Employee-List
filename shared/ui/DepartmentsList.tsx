@@ -10,7 +10,7 @@ type Props = {
 };
 
 const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
-  const { theme, light, dark } = useTheme();
+  const { theme, light, dark, changeStyles } = useTheme();
 
   const selectedItem = {
     fontWeight: 600,
@@ -49,14 +49,7 @@ const DepartmentsList = ({ selectedTag, setDepartment }: Props) => {
           </Pressable>
         ))}
       </ScrollView>
-      <View
-        style={[
-          styles.brLine,
-          theme === "light"
-            ? { backgroundColor: light.lightText }
-            : { backgroundColor: dark.lightText },
-        ]}
-      ></View>
+      <View style={[styles.brLine, changeStyles([["backgroundColor", "lightText"]])]}></View>
     </>
   );
 };

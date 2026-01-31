@@ -16,7 +16,7 @@ const SortDrawer = () => {
     setSortValue,
     setIsDrawerOpen,
   ]);
-  const { theme, dark, light } = useTheme();
+  const { changeStyles } = useTheme();
 
   const slideAnim = useRef(new Animated.Value(300)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -96,23 +96,14 @@ const SortDrawer = () => {
       <Animated.View
         style={[
           styles.drawer,
-          theme === "light"
-            ? { backgroundColor: light.background }
-            : { backgroundColor: dark.background },
+          changeStyles([["backgroundColor", "background"]]),
           {
             transform: [{ translateY: Animated.add(slideAnim, panY) }],
           },
         ]}
         {...panResponder.panHandlers}
       >
-        <View
-          style={[
-            styles.draggableLine,
-            theme === "light"
-              ? { backgroundColor: light.lightText }
-              : { backgroundColor: dark.lightText },
-          ]}
-        />
+        <View style={[styles.draggableLine, changeStyles([["backgroundColor", "lightText"]])]} />
         <AppText style={styles.title}>{i18n.t("sort")}</AppText>
         <View style={styles.options}>
           <Pressable

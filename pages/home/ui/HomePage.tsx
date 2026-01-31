@@ -24,7 +24,7 @@ const HomePage = () => {
   ]);
   const setNewError = useUnit(setError);
   const isDrawerOpen = useUnit($isDrawerOpen);
-  const { theme, light, dark } = useTheme();
+  const { theme, light, dark, changeStyles } = useTheme();
 
   const { data, isFetching, isError, error, refetch } = useQuery({
     queryKey: ["employees", selectedDepartment],
@@ -41,9 +41,6 @@ const HomePage = () => {
     if (data) setEmployeesData(data);
   }, [data]);
 
-  const brLineTheme =
-    theme === "light" ? { backgroundColor: light.lightText } : { backgroundColor: dark.lightText };
-
   return (
     <View style={{ flex: 1, position: "relative" }}>
       <TopBar />
@@ -54,11 +51,15 @@ const HomePage = () => {
             return data.item.newYearBirthdaysStart ? (
               <>
                 <View style={styles.newYearBr}>
-                  <View style={[styles.brLine, brLineTheme]}></View>
+                  <View
+                    style={[styles.brLine, changeStyles([["backgroundColor", "lightText"]])]}
+                  ></View>
                   <AppText lightText style={{ fontSize: 15 }}>
                     {new Date().getFullYear() + 1}{" "}
                   </AppText>
-                  <View style={[styles.brLine, brLineTheme]}></View>
+                  <View
+                    style={[styles.brLine, changeStyles([["backgroundColor", "lightText"]])]}
+                  ></View>
                 </View>
                 <EmployeeCard {...data.item} />
               </>

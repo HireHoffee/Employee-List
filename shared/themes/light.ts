@@ -1,4 +1,6 @@
-export const lightTheme = {
+import type { ThemeColors } from ".";
+
+export const lightTheme: ThemeColors = {
   background: "#ffffff",
   secondaryBackground: "#f7f7f8",
   text: "#050510",

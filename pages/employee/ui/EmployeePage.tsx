@@ -17,7 +17,7 @@ const EmployeePage = () => {
   const glob = useGlobalSearchParams();
   const [data, setEmployeesId] = useUnit([$employee, setEmployeeSelectedId]);
   const [errorImageLoading, setErrorImageLoading] = useState(false);
-  const { theme, dark, light } = useTheme();
+  const { theme, dark, light, changeStyles } = useTheme();
 
   useEffect(() => {
     setEmployeesId(glob.id as string);
@@ -32,9 +32,7 @@ const EmployeePage = () => {
       <View
         style={[
           styles.mainInfoContainer,
-          theme === "light"
-            ? { backgroundColor: light.secondaryBackground }
-            : { backgroundColor: dark.secondaryBackground },
+          changeStyles([["backgroundColor", "secondaryBackground"]]),
         ]}
       >
         <Pressable style={styles.icon} onPress={() => router.back()}>
@@ -66,12 +64,7 @@ const EmployeePage = () => {
         </View>
       </View>
       <View
-        style={[
-          styles.additionalInfoContainer,
-          theme === "light"
-            ? { backgroundColor: light.background }
-            : { backgroundColor: dark.background },
-        ]}
+        style={[styles.additionalInfoContainer, changeStyles([["backgroundColor", "background"]])]}
       >
         <View style={styles.birthdayContainer}>
           <View style={styles.birthday}>
